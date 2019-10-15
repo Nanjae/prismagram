@@ -72,28 +72,30 @@
 2. .env
    - src 폴더에 생성 및 소스 추가
      PORT=4000
-   - 모든 설정값들을 .env에 추가하는 습관은 좋은거임
+   - 모든 숨겨야할 설정값들을 .env에 추가하는 습관은 좋은거임
 3. server.js
 
    - 소스 추가
-     require("dotenv").config();
-     import { GraphQLServer } from "graphql-yoga";
+      import dotenv from "dotenv";
+      import path from "path";
+      dotenv.config({ path: path.resolve(__dirname, ".env") });
+      import { GraphQLServer } from "graphql-yoga";
 
-     const PORT = process.env.PORT || 4000;
+      const PORT = process.env.PORT || 4000;
 
-     const typeDefs = `type Query{ hello: String! }`;
+      const typeDefs = `type Query{ hello: String! }`;
 
-     const resolvers = {
-     Query: {
-     hello: () => "Hi"
-     }
-     };
+      const resolvers = {
+      Query: {
+      hello: () => "Hi"
+      }
+      };
 
-     const server = new GraphQLServer({ typeDefs, resolvers });
+      const server = new GraphQLServer({ typeDefs, resolvers });
 
-     server.start({ port: PORT }, () =>
-     console.log(`Server running on http://localhost:${PORT}`)
-     );
+      server.start({ port: PORT }, () =>
+      console.log(`Server running on http://localhost:${PORT}`)
+      );
 
 4. .babelrc
    - 파일 생성 및 소스 추가
@@ -201,7 +203,7 @@
    - datamodel.prisma 소스 복사 후 모든 directive = @... 삭제
 5. resolvers
    - api/[bigGroup]/[smallGroup]/[smallGroup.js&graphql] => graphql은 query, js는 resolver
-   - resolver는 query에 맞게 데이터에 접근하는 함수!
+   - resolver는 query에 맞게 데이터에 접근하는 함수! => 기능별로 쪼개서 만들고 불러다 쓰면 됨!
    1. resolvers with Prisma
       - import { prisma } from "../../../../generated/prisma-client";
       - prisma.function() 형태로 사용
