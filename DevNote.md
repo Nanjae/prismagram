@@ -1,6 +1,7 @@
 # DevNote for "FullStack" with React and React-Native Development by JAEUK LEE a.k.a Nanjae
 
 ## 개발환경 구성
+
 1. node.js
    - https://nodejs.org/ko/
    - 버전은 그냥 안정적인걸로 받자 => v10 이상이면 상관없음
@@ -22,8 +23,8 @@
 7. a lot of coffee
    - 개발시간 = 마신 커피 잔 수 => 난 라떼가 좋더라
 
-
 ## 프로젝트 생성
+
 1. github repository
    - git init 하고 여러가지 하는 것보다 그냥 애초에 github에서 만들고 clone 하는게 편함 => 개인취향
    - 만들 때 .gitignore node.js로 만들고 하자 => 안하면? node_modules 폴더도 전부 올리고 싶은거라 생각함 => 혹시 뭐 더 필요하면 스크립트 작성해서 추가 가능
@@ -52,9 +53,9 @@
       - 다음 단계에서 쓰게됨
    4. package.json
       - 소스 추가
-         "scripts": {
-            "dev": "nodemon --exec babel-node src/server.js"
-         }
+        "scripts": {
+        "dev": "nodemon --exec babel-node src/server.js"
+        }
       - 이건 패키지가 아니라 package.json에서 수정을 해야되는 순서임 => "dev" 말고 "start"로 쓰는 편인데 난 그냥 배웠던대로 "dev" 씀
       - 이제 yarn dev 해주면 "nodemon --exec babel-node src/server.js"이 실행되는거지
    5. nodemon.json
@@ -62,6 +63,7 @@
       - nodemon이 감시할 파일의 확장자를 지정해주자 => .js랑 .graphql 파일이 수정 될 때마다 서버를 재시작 해줄거야
 
 ## 백엔드 구성 GraphQL Server
+
 1. dotenv
    - https://github.com/motdotla/dotenv
    - yarn add dotenv
@@ -69,37 +71,35 @@
    - .env 파일은 오픈소스로 프로젝트 공개할 때 .gitignore를 통해 제외하면 안전함
 2. .env
    - src 폴더에 생성 및 소스 추가
-      PORT=4000
+     PORT=4000
    - 모든 설정값들을 .env에 추가하는 습관은 좋은거임
 3. server.js
+
    - 소스 추가
-      require("dotenv").config();
-      import { GraphQLServer } from "graphql-yoga";
+     require("dotenv").config();
+     import { GraphQLServer } from "graphql-yoga";
 
-      const PORT = process.env.PORT || 4000;
+     const PORT = process.env.PORT || 4000;
 
-      const typeDefs = `
-            type Query{
-               hello: String!
-            }
-      `;
+     const typeDefs = `type Query{ hello: String! }`;
 
-      const resolvers = {
-         Query: {
-            hello: () => "Hi"
-         }
-      };
+     const resolvers = {
+     Query: {
+     hello: () => "Hi"
+     }
+     };
 
-      const server = new GraphQLServer({ typeDefs, resolvers });
+     const server = new GraphQLServer({ typeDefs, resolvers });
 
-      server.start({ port: PORT }, () =>
-         console.log(`Server running on http://localhost:${PORT}`)
-      );
+     server.start({ port: PORT }, () =>
+     console.log(`Server running on http://localhost:${PORT}`)
+     );
+
 4. .babelrc
    - 파일 생성 및 소스 추가
-      {
-         "presets": ["@babel/preset-env"]
-      }
+     {
+     "presets": ["@babel/preset-env"]
+     }
    - bable 설정 파일인데 preset이랑 plugin 같은 걸 설정함
 5. @babel/node
    - https://babeljs.io/docs/en/babel-node
@@ -119,51 +119,89 @@
    - logger 미들웨어. 즉, 로깅 전용 모듈인데 => HTTP 서버에서 로그 기록 남기는 역할을 함 => 서버를 서버답게 만들어준달까
 9. server.js
    - 소스 추가
-      import logger from "morgan"
-      server.express.use(logger("dev"));
+     import logger from "morgan"
+     server.express.use(logger("dev"));
 10. schema.js
-   - src 폴더에 생성
-   - api 폴더에 있는 graphql과 resolvers 파일을 합치는 역할
+
+- src 폴더에 생성
+- api 폴더에 있는 graphql과 resolvers 파일을 합치는 역할
+
 11. graphql-tools
-   - https://www.apollographql.com/docs/graphql-tools/
-   - yarn add graphql-tools
-   - JavaScript GraphQL schema를 만들기 위한 패키지
+
+- https://www.apollographql.com/docs/graphql-tools/
+- yarn add graphql-tools
+- JavaScript GraphQL schema를 만들기 위한 패키지
+
 12. merge-graphql-schemas
-   - https://github.com/Urigo/merge-graphql-schemas
-   - yarn add merge-graphql-schemas
-   - schema를 구성할 query와 resolver를 합치기 위한 패키지
+
+- https://github.com/Urigo/merge-graphql-schema
+- yarn add merge-graphql-schema
+- schema를 구성할 query와 resolver를 합치기 위한 패키지
+
 13. schema.js
-   - 소스 추가
-      import path from "path";
-      import { makeExecutableSchema } from "graphql-tools";
-      import { fileLoader, mergeResolvers, mergeTypes } from "merge-graphql-schemas";
 
-      const allTypes = fileLoader(path.join(__dirname, "/api/**/*.graphql"));
-      const allResolvers = fileLoader(path.join(__dirname, "/api/**/*.js"));
+- 소스 추가
+  import path from "path";
+  import { makeExecutableSchema } from "graphql-tools";
+  import { fileLoader, mergeResolvers, mergeTypes } from "merge-graphql-schemas";
 
-      const schema = makeExecutableSchema({
-         typeDefs: mergeTypes(allTypes),
-         resolvers: mergeResolvers(allResolvers)
-      });
+  const allTypes = fileLoader(path.join(**dirname, "/api/\*_/_.graphql"));
+  const allResolvers = fileLoader(path.join(**dirname, "/api/\*_/_.js"));
 
-      export default schema;
+  const schema = makeExecutableSchema({
+  typeDefs: mergeTypes(allTypes),
+  resolvers: mergeResolvers(allResolvers)
+  });
+
+  export default schema;
+
 14. folders and files for schema
-   - src/api/--/--/--.graphql => Query 소스 예제
-      type Query {
-         sayHello: String!
-      }
-   - src/api/--/--/--.js => Resolver 소스 예제
-      export default {
-         Query: {
-            sayHello: () => "Hello"
-         }
-      };
-   - src/schema.js => Query와 Resolver를 모아서 import함
+
+- src/api/--/--/--.graphql => Query 소스 예제
+  type Query {
+  sayHello: String!
+  }
+- src/api/--/--/--.js => Resolver 소스 예제
+  export default {
+  Query: {
+  sayHello: () => "Hello"
+  }
+  };
+- src/schema.js => Query와 Resolver를 모아서 import함
+
 15. server.js
-   - 소스 수정
-      import schema from "./schema";
-      const server = new GraphQLServer({ schema });
-   - 기존 typeDefs와 resolvers => schema
-   - 나중에 많은 query와 resolver가 생기면 관리하기 편할거 같음
+
+- 소스 수정
+  import schema from "./schema";
+  const server = new GraphQLServer({ schema });
+- 기존 typeDefs와 resolvers => schema
+- 나중에 많은 query와 resolver가 생기면 관리하기 편할거 같음
 
 ## 백앤드 구성 Prisma
+
+1. prisma
+   - https://www.prisma.io
+   - yarn add prisma
+   - 앱에서 필요한 데이터모델을 graphql로 정의하게 만들어줌 => 거기다 서버랑 관리도구도 만들어 주는데? 이거 진짜 최고임 쓰다 놀랬음
+   - yarn prisma login -k [key]로 로그인 해주면 웹에서 로그인 인증이 완료됨
+   - yarn prisma init 으로 설정하고 => 일단은 Demo server로 시작해보자
+   - yarn prisma deploy 해주면 끝! => 수정하고나서 서버에 적용하려면 써야함 => 출시하고 나면 자동업데이트 된다는데?
+2. .gitignore
+   - .gitignore에 generated 폴더 prisma.yml 파일은 .gitignore에 추가하도록 하자 => 안그럼 admin이랑 endpoint가 노출되서 맘대로 데이터 수정이 가능해버림
+3. package.json
+   - 소스 추가
+     "deploy": "prisma deploy",
+     "generate": "prisma generate",
+     "prisma": "yarn run deploy && yarn run generate"
+     "admin" : "prisma admin"
+   - prisma 명령어 편하게 쓰려면 "scripts"에 추가하자 => generate는 generated/prisma-client 안에 prisma-schame.js 파일에 query를 갱신해주는 역할임
+   - admin은 관리도구 browser 열어주는 용도 => endpoint 뒤에 \_admin 붙이면 되는데 바로 여는 링크 어딨는지 몰라서 doc 뒤져서 추가해놨음
+4. models.graphql
+   - src/api 안에 생성
+   - datamodel.prisma 소스 복사 후 모든 directive = @... 삭제
+5. resolvers
+   - api/[bigGroup]/[smallGroup]/[smallGroup.js&graphql] => graphql은 query, js는 resolver
+   - resolver는 query에 맞게 데이터에 접근하는 함수!
+   1. resolvers with Prisma
+      - import { prisma } from "../../../../generated/prisma-client";
+      - prisma.function() 형태로 사용
