@@ -72,17 +72,16 @@
 2. .env
    - src 폴더에 생성 및 소스 추가
      PORT=4000
-   - 모든 숨겨야할 설정값들을 .env에 추가하는 습관은 좋은거임
-   - .env파일에서 가져다 쓸 일 있으면 다음 소스 추가
+   - 모든 숨겨야할 설정 값들(key)을 .env에 추가하는 습관은 좋은거임
+3. env.js
+   - src 폴더에 생성 및 소스 추가
       import dotenv from "dotenv";
       import path from "path";
-      dotenv.config({ path: path.resolve(__dirname, ".env") });
-3. server.js
+      dotenv.config({ path: path.resolve(__dirname, ".env") });      
+4. server.js
 
    - 소스 추가
-      import dotenv from "dotenv";
-      import path from "path";
-      dotenv.config({ path: path.resolve(__dirname, ".env") });
+      import "./env";
       import { GraphQLServer } from "graphql-yoga";
 
       const PORT = process.env.PORT || 4000;
@@ -101,33 +100,33 @@
       console.log(`Server running on http://localhost:${PORT}`)
       );
 
-4. .babelrc
+5. .babelrc
    - 파일 생성 및 소스 추가
      {
      "presets": ["@babel/preset-env"]
      }
    - bable 설정 파일인데 preset이랑 plugin 같은 걸 설정함
-5. @babel/node
+6. @babel/node
    - https://babeljs.io/docs/en/babel-node
    - yarn add @babel/node
    - babel CLI 도구 중 하나 => babel 명령줄 사용하게 해줌
-6. @babel/preset-env
+7. @babel/preset-env
    - https://babeljs.io/docs/en/babel-preset-env
    - yarn add @babel/preset-env
    - babel preset 중 하나 => 호환되지 않는 상위 버전 언어의 코드를 transpile 해줌
-7. @babel/core
+8. @babel/core
    - https://babeljs.io/docs/en/babel-core
    - yarn add @babel/core
    - babel 핵심 파일 => 다른 babel 모듈들이 종속성을 가짐 => babel 사용하려면 명시적으로 추가해줘야 하는 건데 뭔지 잘 모르겠음
-8. morgan
+9.  morgan
    - https://alligator.io/nodejs/getting-started-morgan/
    - yarn add morgan
    - logger 미들웨어. 즉, 로깅 전용 모듈인데 => HTTP 서버에서 로그 기록 남기는 역할을 함 => 서버를 서버답게 만들어준달까
-9. server.js
+11. server.js
    - 소스 추가
      import logger from "morgan"
      server.express.use(logger("dev"));
-10. schema.js
+12. schema.js
 
 - src 폴더에 생성
 - api 폴더에 있는 graphql과 resolvers 파일을 합치는 역할
@@ -227,3 +226,19 @@
 2. Random Word Generator
    - https://www.randomlists.com/random-words
    - 무작위 글자들을 생성해주는 사이트 => 대량으로 가능
+3. passport & passport-jwt & jsonwebtoken
+   - http://www.passportjs.org/
+   - http://www.passportjs.org/packages/passport-jwt/
+   - https://www.npmjs.com/package/jsonwebtoken
+   - yarn add passport
+   - yarn add passport-jwt
+   - yarn add jsonwebtoken
+   - 서명 인증을 위해 사용하자
+   - passport는 인증 관련된 모든 일을 함 => 토큰이나 쿠키에서 정보를 가져와서 사용자 정보에 저장해줌 => 토큰 해독해서 저장하는거임
+   - passport-jwt는 jsonwebtoken을 해독해서 passport에 가져다주는 역할
+   - jsonwebtoken은 jwt를 생성하기 위해 필요
+   - 아니 진짜 얘넨 뭔지 너무 어렵다 => 3.4~3.6은 다시 쭉 보자
+4. Random Keygen
+   - https://randomkeygen.com/
+   - 서명 등에 사용할 키조합을 랜덤으로 생성해주는 사이트 => CodeIgniter Encryption Keys 부분 키로 하는 가져오는 편
+   - 정말 중요한 키인 경우가 99%이상이니 꼭 .env에 저장해주자
