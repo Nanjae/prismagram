@@ -2,8 +2,8 @@ type User {
   id: ID! @id
   username: String! @unique
   email: String! @unique
-  firstName: String! @default(value: "")
-  lastName: String!
+  firstName: String
+  lastName: String
   bio: String
   following: [User!]! @relation(name: "FollowRelation")
   followers: [User!]! @relation(name: "FollowRelation")
