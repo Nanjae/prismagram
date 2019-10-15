@@ -1,4 +1,4 @@
-# DevNote for "FullStack" with React and React-Native Development by JAEUK LEE a.k.a Nanjae
+# DevNote for "FullStack Development" with React and React-Native by JAEUK LEE a.k.a Nanjae
 
 ## 개발환경 구성
 
@@ -73,6 +73,10 @@
    - src 폴더에 생성 및 소스 추가
      PORT=4000
    - 모든 숨겨야할 설정값들을 .env에 추가하는 습관은 좋은거임
+   - .env파일에서 가져다 쓸 일 있으면 다음 소스 추가
+      import dotenv from "dotenv";
+      import path from "path";
+      dotenv.config({ path: path.resolve(__dirname, ".env") });
 3. server.js
 
    - 소스 추가
@@ -207,3 +211,19 @@
    1. resolvers with Prisma
       - import { prisma } from "../../../../generated/prisma-client";
       - prisma.function() 형태로 사용
+
+## 유용한 패키지들 or 사이트들
+1. ❌❌❌nodemailer & nodemailer-sendgrid-transport❌❌❌
+   - https://nodemailer.com/about/
+   - https://sendgrid.com/blog/sending-email-nodemailer-sendgrid/
+   - yarn add nodemailer
+   - yarn add nodemailer-sendgrid-transport
+   - 메일 보낼때 사용 => sendgrid는 nodemailer에서 필요한 transport를 지원하는 모듈임
+   1. ⭕⭕⭕@sendgrid/mail⭕⭕⭕
+      - https://github.com/sendgrid/sendgrid-nodejs/tree/master/packages/mail
+      - https://sendgrid.com
+      - nodemailer-sendgrid-transport가 뭐 때문인지 제대로 동작 안하길래 다른거 찾아다 쓰는중
+      - 이건 API_KEY를 발급받아서 사용하는거 => nodemailer 쓸 필요 없음 => spam으로 안가게 하려고 sendgrid 통해서 보내는거임
+2. Random Word Generator
+   - https://www.randomlists.com/random-words
+   - 무작위 글자들을 생성해주는 사이트 => 대량으로 가능
