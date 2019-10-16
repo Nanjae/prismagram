@@ -75,30 +75,30 @@
    - 모든 숨겨야할 설정 값들(key)을 .env에 추가하는 습관은 좋은거임
 3. env.js
    - src 폴더에 생성 및 소스 추가
-      import dotenv from "dotenv";
-      import path from "path";
-      dotenv.config({ path: path.resolve(__dirname, ".env") });      
+     import dotenv from "dotenv";
+     import path from "path";
+     dotenv.config({ path: path.resolve(\_\_dirname, ".env") });
 4. server.js
 
    - 소스 추가
-      import "./env";
-      import { GraphQLServer } from "graphql-yoga";
+     import "./env";
+     import { GraphQLServer } from "graphql-yoga";
 
-      const PORT = process.env.PORT || 4000;
+     const PORT = process.env.PORT || 4000;
 
-      const typeDefs = `type Query{ hello: String! }`;
+     const typeDefs = `type Query{ hello: String! }`;
 
-      const resolvers = {
-      Query: {
-      hello: () => "Hi"
-      }
-      };
+     const resolvers = {
+     Query: {
+     hello: () => "Hi"
+     }
+     };
 
-      const server = new GraphQLServer({ typeDefs, resolvers });
+     const server = new GraphQLServer({ typeDefs, resolvers });
 
-      server.start({ port: PORT }, () =>
-      console.log(`Server running on http://localhost:${PORT}`)
-      );
+     server.start({ port: PORT }, () =>
+     console.log(`Server running on http://localhost:${PORT}`)
+     );
 
 5. .babelrc
    - 파일 생성 및 소스 추가
@@ -118,14 +118,18 @@
    - https://babeljs.io/docs/en/babel-core
    - yarn add @babel/core
    - babel 핵심 파일 => 다른 babel 모듈들이 종속성을 가짐 => babel 사용하려면 명시적으로 추가해줘야 하는 건데 뭔지 잘 모르겠음
-9.  morgan
-   - https://alligator.io/nodejs/getting-started-morgan/
-   - yarn add morgan
-   - logger 미들웨어. 즉, 로깅 전용 모듈인데 => HTTP 서버에서 로그 기록 남기는 역할을 함 => 서버를 서버답게 만들어준달까
+9. morgan
+
+- https://alligator.io/nodejs/getting-started-morgan/
+- yarn add morgan
+- logger 미들웨어. 즉, 로깅 전용 모듈인데 => HTTP 서버에서 로그 기록 남기는 역할을 함 => 서버를 서버답게 만들어준달까
+
 11. server.js
-   - 소스 추가
-     import logger from "morgan"
-     server.express.use(logger("dev"));
+
+- 소스 추가
+  import logger from "morgan"
+  server.express.use(logger("dev"));
+
 12. schema.js
 
 - src 폴더에 생성
@@ -212,6 +216,7 @@
       - prisma.function() 형태로 사용
 
 ## 유용한 패키지들 or 사이트들
+
 1. ❌❌❌nodemailer & nodemailer-sendgrid-transport❌❌❌
    - https://nodemailer.com/about/
    - https://sendgrid.com/blog/sending-email-nodemailer-sendgrid/
@@ -242,3 +247,10 @@
    - https://randomkeygen.com/
    - 서명 등에 사용할 키조합을 랜덤으로 생성해주는 사이트 => CodeIgniter Encryption Keys 부분 키로 하는 가져오는 편
    - 정말 중요한 키인 경우가 99%이상이니 꼭 .env에 저장해주자
+
+## 유용한 방식들
+
+1. middlewares.js
+   - src폴더에 생성
+   - 여러 코드에서 같이 쓰일 조건들을 middleware로 만들어 불러다 쓰면 편함 => 예를들어 서명받은 유저인지 체크한다거나
+   - 중간에 불러다 쓰면 조건에 맞지않으면 그 뒤 코드들을 실행 안할거임
