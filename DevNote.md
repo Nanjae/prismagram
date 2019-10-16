@@ -207,7 +207,7 @@
    - admin은 관리도구 browser 열어주는 용도 => endpoint 뒤에 \_admin 붙이면 되는데 바로 여는 링크 어딨는지 몰라서 doc 뒤져서 추가해놨음
 4. models.graphql
    - src/api 안에 생성
-   - datamodel.prisma 소스 복사 후 모든 directive = @... 삭제
+   - datamodel.prisma 소스 복사 후 모든 directive = @... 삭제 => @... 들은 prisma 영역이라 grahql에서는 쓸 수가 없음
 5. resolvers
    - api/[bigGroup]/[smallGroup]/[smallGroup.js&graphql] => graphql은 query, js는 resolver
    - resolver는 query에 맞게 데이터에 접근하는 함수! => 기능별로 쪼개서 만들고 불러다 쓰면 됨!
