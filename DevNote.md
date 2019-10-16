@@ -248,9 +248,15 @@
    - 서명 등에 사용할 키조합을 랜덤으로 생성해주는 사이트 => CodeIgniter Encryption Keys 부분 키로 하는 가져오는 편
    - 정말 중요한 키인 경우가 99%이상이니 꼭 .env에 저장해주자
 
-## 유용한 방식들
+## 유용한 정보들
 
 1. middlewares.js
    - src폴더에 생성
-   - 여러 코드에서 같이 쓰일 조건들을 middleware로 만들어 불러다 쓰면 편함 => 예를들어 서명받은 유저인지 체크한다거나
+   - 여러 코드에서 같이 쓰일 조건들을 middleware로 만들어 불러다 쓰면 편함 => 예를들어 인증받은 유저들만 사용할 기능에서
    - 중간에 불러다 쓰면 조건에 맞지않으면 그 뒤 코드들을 실행 안할거임
+2. async & await
+   - https://developers.google.com/web/fundamentals/primers/async-functions?hl=ko
+   - https://developers.google.com/web/fundamentals/primers/promises?hl=ko
+   - promise가 resolve될 때 까지 기다렸다가 return을 받으면 다음 promise를 실행한다 => 비동기 함수라고 하는데 콜백함수를 쓸 필요가 없고 가독성도 좋음
+   - 그리고 기본 promise가 아닌 promise들을 안전하게 비동기 시킬 수 있다는데 아직 효과는 못 느낌
+   - 소스의 마지막 줄이 return 할 값이라면 async와 await를 사용하지 않아도 자동으로 기다렸다 전달한다
