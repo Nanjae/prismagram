@@ -262,17 +262,18 @@
    - 그리고 기본 promise가 아닌 promise들을 안전하게 비동기 시킬 수 있다는데 아직 효과는 못 느낌
    - 소스의 마지막 줄이 return 할 값이라면 async와 await를 사용하지 않아도 자동으로 기다렸다 전달한다
 3. relationship for Prisma
-   1. ❌❌❌fragments.js❌❌❌
+   1. fragments.js
       - src 폴더에 생성
       - 깊은 relationship이 필요한 경우 사용하면 됨 => 현재 prisma의 한계점인데 schema에 정의된 type 안에 연결된 다른 type에 접근하려면 필요함
       - prisma에서 깊은 관계들에 대해 접근하지 못하게 해놓은 이유는 무한루프로 인해 서버 다운을 방지하려는거 같음
       - 그래서 fragment를 만들어 더 깊은 관계로 들어갈 수 있도록 query를 보조해서 접근할 수 있음
-   2. ⭕⭕⭕computed.js⭕⭕⭕
+   2. computed.js
       - 연관있는 api/folder에 생성 => 보통 folder.js로 만드는 편
       - 가끔씩 필요하게 될 resolver들을 만들어서 넣어서 관리하면 됨
       - api 안에 만들어진 resolver는 어차피 schema.js에서 통합시키므로 어디서든 불러다 쓸 수 있음
       - 이 resolver의 첫번째 인자는 parent로부터 받아서 씀
       - 깊은 relationship을 위해 fragment를 만들어서 접근하는 대신 computed resolvers를 만들어 쓰는게 더 깔끔함 => performance는 아직 모르겠음
+      - 근데 가끔 어쩔 수 없이 fragment를 만들어야 하는 경우가 있는데 => 없앨 방법을 찾아보자
    3. @relation directive
       - https://www.prisma.io/docs/datamodel-and-migrations/datamodel-MYSQL-knul/#relations
       - 필요한게 있으면 찾아다 쓰자! => 왠만큼 필요한 건 다 있어서 쓸 줄만 알면 편한거 같음
