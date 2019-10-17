@@ -273,3 +273,6 @@
       - api 안에 만들어진 resolver는 어차피 schema.js에서 통합시키므로 어디서든 불러다 쓸 수 있음
       - 이 resolver의 첫번째 인자는 parent로부터 받아서 씀
       - 깊은 relationship을 위해 fragment를 만들어서 접근하는 대신 computed resolvers를 만들어 쓰는게 더 깔끔함 => performance는 아직 모르겠음
+   3. @relation directive
+      - https://www.prisma.io/docs/datamodel-and-migrations/datamodel-MYSQL-knul/#relations
+      - 필요한게 있으면 찾아다 쓰자! => 왠만큼 필요한 건 다 있어서 쓸 줄만 알면 편한거 같음
