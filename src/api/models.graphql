@@ -23,6 +23,7 @@ type Post {
   caption: String!
   user: User!
   isLiked: Boolean!
+  likeCount: Int!
   files: [File!]!
   likes: [Like!]!
   comments: [Comment!]!
