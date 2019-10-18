@@ -14,23 +14,24 @@ export default {
         ]
       });
       if (roomId === undefined) {
-        if (!existingRoom) {
-          if (user.id !== toId) {
+        if (user.id !== toId) {
+          if (!existingRoom) {
             room = await prisma.createRoom({
               participants: { connect: [{ id: toId }, { id: user.id }] }
             });
+          } else if (existingRoom) {
+            const existingRoomArray = await prisma.rooms({
+              where: {
+                AND: [
+                  { participants_some: { id: user.id } },
+                  { participants_some: { id: toId } }
+                ]
+              }
+            });
+            room = existingRoomArray[0];
           }
-        } else if (existingRoom) {
-          const existingRoomArray = await prisma.rooms({
-            where: {
-              AND: [
-                { participants_some: { id: user.id } },
-                { participants_some: { id: toId } }
-              ]
-            }
-          });
-          room = existingRoomArray[0];
-          console.log(room);
+        } else {
+          throw Error("You can't send message to you");
         }
       } else {
         room = await prisma.room({ id: roomId });
