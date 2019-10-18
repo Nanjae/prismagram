@@ -1,10 +1,8 @@
-# Prismagram
+# Prismagram Back-End
 
 Instagram clone with Express + Prisma + React and React Native
 
 ## User Stories
-
-### [ ] => to do, [x] => API done, [o] => API & Front done
 
 - [x] Create account
 - [x] Request Secret
