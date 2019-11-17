@@ -4,7 +4,7 @@ export default {
   User: {
     following: ({ id }) => prisma.user({ id }).following(),
     followers: ({ id }) => prisma.user({ id }).followers(),
-    posts: ({ id }) => prisma.user({ id }).posts(),
+    posts: ({ id }) => prisma.user({ id }).posts({ orderBy: "createdAt_DESC" }),
     likes: ({ id }) => prisma.user({ id }).likes(),
     comments: ({ id }) => prisma.user({ id }).comments(),
     rooms: ({ id }) => prisma.user({ id }).rooms(),
