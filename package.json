@@ -13,6 +13,7 @@
     "@babel/runtime": "^7.7.2",
     "@sendgrid/mail": "^6.4.0",
     "aws-sdk": "^2.573.0",
+    "copy": "^0.3.2",
     "dotenv": "^8.1.0",
     "graphql-tools": "^4.0.5",
     "graphql-yoga": "^1.18.3",
@@ -35,6 +36,8 @@
     "prisma": "yarn run deploy && yarn run generate",
     "admin": "prisma admin",
     "dev": "nodemon --exec babel-node src/server.js",
-    "build": "babel src -d build"
+    "build": "babel src -d build",
+    "postbuild": "npx copy src/api/**/*.graphql ./build/api",
+    "start": "node build/server.js"
   }
 }
