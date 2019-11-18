@@ -33,7 +33,7 @@
   "scripts": {
     "deploy": "prisma deploy",
     "generate": "prisma generate",
-    "prisma": "yarn run deploy && yarn run generate",
+    "prisma": "yarn run generate",
     "admin": "prisma admin",
     "dev": "nodemon --exec babel-node src/server.js",
     "prebuild": "yarn run prisma",
